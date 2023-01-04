@@ -1,5 +1,6 @@
 import { useState } from "react";
 import List from "./List";
+import './styling/Article.css';
 
 function Article() {
   const [lists, setLists] = useState({});
@@ -10,14 +11,20 @@ function Article() {
 
   function addList() {
     const newLists = {};
-    // This runs if the lists object IS empty
+
+    // Checking if the input is either whitespace or blank
+    if (/\s+$/.test(listTitle) || listTitle ==='') {
+      alert('Remove any excess whitespace from the LISTINPUT')
+      return;
+    };
+    // Creating a new 'lists' state from scratch, if there's no current 'lists' state
     if (!Object.keys(lists).length) {
       newLists['0'] = {
         title: listTitle,
         tasks: [],
       };
       setLists(newLists);
-    // This runs if the lists object IS NOT empty
+    // If there is a current 'lists' state, we merely add new lists into it
     } else {
       let newIndex = 0;
       for (const [key, value] of Object.entries(lists)) {
@@ -56,8 +63,10 @@ function Article() {
   };
 
   function addTask(index) {
-    lists[index].tasks.push([taskTitle, taskDesc]);
-    setLists(lists);
+    const newLists = {...lists};
+    // Pushing the new task into the 'lists' state
+    newLists[index].tasks.push([taskTitle, taskDesc]);
+    setLists(newLists);
   };
 
   /*
@@ -77,7 +86,8 @@ function Article() {
         <input placeholder='ADDLIST'
         onChange={event => setListTitle(event.target.value)}></input>
         <button onClick={() => addList()}>ADDTOLISTS</button>
-        {
+        { 
+        // Rendering the lists
           Object.entries(lists).map(([index, list]) => {
             if (Object.keys(lists).length) {
               if (list) {

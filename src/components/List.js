@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Card from './Card';
+import './styling/List.css';
 
 function List({id='NOID', title='NOTITLE', tasks, taskFunc, delFunc, titleFunc, descFunc}) {
   const [visibleMenu, setVisibleMenu] = useState(false);
@@ -7,23 +8,26 @@ function List({id='NOID', title='NOTITLE', tasks, taskFunc, delFunc, titleFunc, 
   function showMenu() {
     setVisibleMenu(!visibleMenu);
   };
+
   return(
     <>
-      {
-        !visibleMenu ? null : (
-          <div>
-            <input placeholder='TASKTITLE' 
-            onChange={event => titleFunc(event.target.value)}></input>
-            <input placeholder='TASKDESC' onChange={event => descFunc(event.target.value)}></input>
-            <button onClick={() => taskFunc(id)}>CONFIRM</button>
-          </div>
-        )
-      }
-      <div>
-        <p>{title}</p>
-        <button onClick={() => showMenu()}>showMenu</button>
-        <button onClick={() => delFunc(id)}>deleteFunc</button>
-      </div>
+      <div className='List'>
+        {
+        // Task creation menu
+          !visibleMenu ? null : (
+            <div>
+              <input placeholder='TASKTITLE' 
+              onChange={event => titleFunc(event.target.value)}></input>
+              <input placeholder='TASKDESC' onChange={event => descFunc(event.target.value)}></input>
+              <button onClick={() => taskFunc(id)}>CONFIRM</button>
+            </div>
+          )
+        }
+        <div className='List-header'>
+          <p>{title}</p>
+          <button onClick={() => showMenu()}>showMenu</button>
+          <button onClick={() => delFunc(id)}>deleteFunc</button>
+        </div>
       <div>
         {
           tasks.map((task, index) => {
@@ -33,6 +37,7 @@ function List({id='NOID', title='NOTITLE', tasks, taskFunc, delFunc, titleFunc, 
           })
         }
       </div>
+    </div>
     </>
   )
 }

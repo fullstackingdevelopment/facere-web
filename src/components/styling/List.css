@@ -1,0 +1,6 @@
+.List {
+  background-color: thistle;
+}
+.List-header {
+  display: flex;
+}
