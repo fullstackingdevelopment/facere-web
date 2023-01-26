@@ -1,0 +1,9 @@
+.Card {
+  background-color: beige;
+  margin: 1em;
+}
+
+.Card-body {
+  display: flex;
+  flex-direction: row;
+}
