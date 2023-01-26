@@ -11,7 +11,6 @@ function Article() {
 
   function addList() {
     const newLists = {};
-
     // Checking if the input is either whitespace or blank
     if (/\s+$/.test(listTitle) || listTitle ==='') {
       alert('Remove any excess whitespace from the LISTINPUT')
@@ -45,18 +44,18 @@ function Article() {
     };
   };
 
-  function deleteList(i) {
+  function deleteList(index) {
     const newLists = {};
-    let newI = 0;
-    lists[i] = null;
+    let newIndex = 0;
+    lists[index] = null;
     // Creating a new 'lists' object from non-null values
     for (const [key, value] of Object.entries(lists)) {
       if (value) {
-        newLists[newI] = {
+        newLists[newIndex] = {
           title: value.title,
           tasks: value.tasks,
         };
-        newI++;
+        newIndex++;
       };
       setLists(newLists);
     };
@@ -69,16 +68,23 @@ function Article() {
     setLists(newLists);
   };
 
-  /*
-  let request = new XMLHttpRequest();
-  let test;
-  request.open('GET', 'https://gmdevapi.com/api/Mongo')
-  request.send();
-  request.onload = ()=>{
-    const data = JSON.parse(request.response);
-    console.log(data)
-  }
-  */
+    function delTask(listId, taskId) {
+    const newLists = {...lists};
+    const tasks = [...lists[listId].tasks];
+    const tasksValues = Object.values(tasks);
+    let newList = [];
+    let index = 0;
+    tasks[taskId] = [null, null];
+    for (const task of tasks) {
+      if (task[0]) {
+        newList.push(task);
+        index++
+      };
+    };
+    newLists[listId].tasks = newList;
+    setLists(newLists);
+    alert('updated');
+  };
   
   return (
     <>
@@ -94,7 +100,8 @@ function Article() {
                 return (
                   <List key={index} id={index} title={list.title}
                   tasks={list.tasks} taskFunc={addTask} delFunc={deleteList}
-                  titleFunc={setTaskTitle} descFunc={setTaskDesc} />
+                  titleFunc={setTaskTitle} descFunc={setTaskDesc} 
+                  delTask={delTask}/>
                 )
               }
             }

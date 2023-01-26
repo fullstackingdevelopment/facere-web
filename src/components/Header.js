@@ -1,8 +1,10 @@
+import './styling/Header.css';
+
 function Header() {
   return(
     <>
       <div className='Header'>
-        header
+        <p className='Header-Title'>Facere-web Prototype</p>
       </div>
     </>
   )

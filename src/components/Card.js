@@ -1,11 +1,14 @@
 import './styling/Card.css';
 
-function Card({title = 'UNNAMED', desc = 'NODESCRIPTION', delCard}) {
+function Card({listId='NOID', id='NOID', title = 'UNNAMED', desc = 'NODESCRIPTION', delTask}) {
   return (
     <>
       <div className='Card'>
         <p>{title}</p>
-        <p>{desc}</p>
+        <div className='Card-body'>
+          <p>{desc}</p>
+          <button onClick={() => delTask(listId, id)}>delete</button>
+        </div>
       </div>
     </>
   )
